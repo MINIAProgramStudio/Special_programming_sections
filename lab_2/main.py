@@ -46,15 +46,18 @@ def import_txt_to_csv_from_dir(path):
     dataframes = {}
     files = os.listdir(path)
     for file in files:
-        dataframes[file[7:10].replace('_','')] = pd.read_csv(path+"/"+file, )
+        dataframes[file[7:10].replace('_','')] = pd.read_csv(path+"/"+file, skipinitialspace = True, sep=";")
     return dataframes
 
+def get_VHI_from_df(dataframes, region_index):
+    return dataframes[region_index].VHI.tolist()
 
 print(">>>Setup complete")
-clean_directory("downloaded_data")
-print(">>>Data directory cleaned")
-download_txt_from_NOAA()
-print(">>>Data downloaded")
+#clean_directory("downloaded_data")
+#print(">>>Data directory cleaned")
+#download_txt_from_NOAA()
+#print(">>>Data downloaded")
 dataframes = import_txt_to_csv_from_dir("downloaded_data")
 print(">>>Data imported")
+print(get_VHI_from_df(dataframes,'1'))
 print(">>>Program ended")

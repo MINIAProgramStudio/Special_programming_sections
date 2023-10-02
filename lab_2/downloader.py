@@ -24,6 +24,10 @@ def to_txt(url,save_path):
 
     text_clean = text_with_commas.replace(',\n', '\n')  # delete commas at the end of the lines
     text_clean = text_clean.replace(',', ';')  # replace comas with ;
+    text_clean = text_clean.replace("; ", ";")
+    text_clean = text_clean.replace("; ", ";")
+    text_clean = text_clean.replace(" ;", ";")
+    text_clean = text_clean.replace(" ;", ";")
 
     file_clean = open(save_path, 'w')  # open text file for data
     file_clean.write(text_clean)  # save data
