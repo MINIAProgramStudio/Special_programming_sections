@@ -1,34 +1,38 @@
-import requests
-import pandas as pd
+import downloader
+from datetime import datetime
+def transform_regions_NOAA_to_ua(index):
+    if index == 1: return 22
+    elif index == 2: return 24
+    elif index == 3: return 23
+    elif index == 4: return 25
+    elif index == 5: return 3
+    elif index == 6: return 4
+    elif index == 7: return 8
+    elif index == 8: return 19
+    elif index == 9: return 20
+    elif index == 10: return 21
+    elif index == 11: return 9
+    elif index == 12: return 90
+    elif index == 13: return 10
+    elif index == 14: return 11
+    elif index == 15: return 12
+    elif index == 16: return 13
+    elif index == 17: return 14
+    elif index == 18: return 15
+    elif index == 19: return 16
+    elif index == 20: return 250
+    elif index == 21: return 17
+    elif index == 22: return 18
+    elif index == 23: return 6
+    elif index == 24: return 1
+    elif index == 25: return 2
+    elif index == 26: return 7
+    elif index == 27: return 5
 
-url= "https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_TS_admin.php?provinceID=1&country=UKR&yearlyTag=Weekly&type=Mean&TagCropland=land&year1=1982&year2=2023"
+def download_txt_from_NOAA():
+    url = "https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_TS_admin.php?provinceID=%s&country=UKR&yearlyTag=Weekly&type=Mean&TagCropland=land&year1=1982&year2=2023"
+    for i in range(1,27):
+        downloader.to_txt(url%(i),"downloaded_data/region%s__%s.txt"%(transform_regions_NOAA_to_ua(i), datetime.now().strftime("%Y_%m_%d__%H_%M_%S")))
 
-vhi_url = requests.get(url) #get data
-out = open('vhi_id_16.txt','wb') #create text file for data
-out.write(vhi_url.content) #save data
-out.close() #close file
-
-file_with_commas = open("vhi_id_16.txt",'r') #open file with data
-text_with_commas = file_with_commas.read() #read file
-file_with_commas.close #close file
-
-first_enter = text_with_commas.find('\n') #delete first line step 1
-text_with_commas = text_with_commas[first_enter+1:] #delete first line step 2
-
-arrow_right_pos = text_with_commas.find('<')
-arrow_left_pos = text_with_commas.find('>')
-while not arrow_right_pos+arrow_left_pos <= -1:
-    text_with_commas = text_with_commas[0:arrow_right_pos]+text_with_commas[arrow_left_pos+1:] #deleting html
-    arrow_right_pos = text_with_commas.find('<')
-    arrow_left_pos = text_with_commas.find('>')
-
-text_clean = text_with_commas.replace(',\n','\n') #delete commas at the end of the lines
-text_clean = text_clean.replace(',',';') #replace comas with ;
-
-file_clean = open("vhi_id_16.txt",'w') #open text file for data
-file_clean.write(text_clean) #save data
-file_clean.close() #close file
-
+download_txt_from_NOAA()
 print ("VHI is downloaded...")
-vhi_csv = pd.read_csv('vhi_id_16.txt')
-vhi_csv.to_csv('vhi_id_16.csv')
