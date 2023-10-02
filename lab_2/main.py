@@ -2,6 +2,8 @@ import downloader
 from datetime import datetime
 import os
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def transform_regions_NOAA_to_ua(index):
     if index == 1: return 22
@@ -49,8 +51,21 @@ def import_txt_to_csv_from_dir(path):
         dataframes[file[7:10].replace('_','')] = pd.read_csv(path+"/"+file, skipinitialspace = True, sep=";")
     return dataframes
 
-def get_VHI_from_df(dataframes, region_index):
+def get_region_VHI(dataframes, region_index):
     return dataframes[region_index].VHI.tolist()
+
+def get_year_VHI(dataframes, region_index,year):
+    VHI_list = get_region_VHI(dataframes,region_index)
+    starting_year = int(dataframes[region_index].year.tolist()[0])
+    return VHI_list[(year-starting_year)*52:(year-starting_year+1)*52]
+
+def find_max_index(in_list):
+    return in_list.index(max(in_list))
+def find_min_index(in_list):
+    return in_list.index(min(in_list))
+
+def find_max_VHI_yearWeek(dataframes, region_index):
+    pass
 
 print(">>>Setup complete")
 #clean_directory("downloaded_data")
@@ -59,5 +74,5 @@ print(">>>Setup complete")
 #print(">>>Data downloaded")
 dataframes = import_txt_to_csv_from_dir("downloaded_data")
 print(">>>Data imported")
-print(get_VHI_from_df(dataframes,'1'))
+dataframes['1'].to_csv("1.csv", sep = ';')
 print(">>>Program ended")
