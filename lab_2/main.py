@@ -1,5 +1,8 @@
 import downloader
 from datetime import datetime
+import os
+import pandas as pd
+
 def transform_regions_NOAA_to_ua(index):
     if index == 1: return 22
     elif index == 2: return 24
@@ -34,5 +37,24 @@ def download_txt_from_NOAA():
     for i in range(1,27):
         downloader.to_txt(url%(i),"downloaded_data/region%s__%s.txt"%(transform_regions_NOAA_to_ua(i), datetime.now().strftime("%Y_%m_%d__%H_%M_%S")))
 
+def clean_directory(path):
+    files = os.listdir('downloaded_data')
+    for file in files:
+        os.remove(path+"/"+file)
+
+def import_txt_to_csv_from_dir(path):
+    dataframes = {}
+    files = os.listdir(path)
+    for file in files:
+        dataframes[file[7:10].replace('_','')] = pd.read_csv(path+"/"+file, )
+    return dataframes
+
+
+print(">>>Setup complete")
+clean_directory("downloaded_data")
+print(">>>Data directory cleaned")
 download_txt_from_NOAA()
-print ("VHI is downloaded...")
+print(">>>Data downloaded")
+dataframes = import_txt_to_csv_from_dir("downloaded_data")
+print(">>>Data imported")
+print(">>>Program ended")
