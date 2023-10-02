@@ -2,3 +2,4 @@ venv
 .idea
 __pycache__
 downloaded_data
+1.csv
