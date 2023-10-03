@@ -110,6 +110,8 @@ def begin():
     print(">>>Setup complete")
     print(">>>Redownload data? (Y/N)")
     if input("<<<").lower() in ['y','yes']:
+        if not os.path.exists("Downloaded_data"):
+            os.makedirs("Downloaded_data")
         clean_directory("Downloaded_data")
         print(">>>Data deleted")
         download_txt_from_NOAA(log = True)
