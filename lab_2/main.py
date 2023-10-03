@@ -2,8 +2,11 @@ import downloader
 from datetime import datetime
 import os
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+
+def remove_items(test_list, item):
+    # using list comprehension to perform the task
+    res = [i for i in test_list if i != item]
+    return res
 
 def transform_regions_NOAA_to_ua(index):
     if index == 1: return 22
@@ -117,12 +120,22 @@ def begin():
     print(">>>Data imported")
 
 def main_loop():
+    print(">>>Year selection of VHI test")
+    print(get_year_VHI(dataframes,input("Region<<<"),int(input("Year<<<"))))
+
+    print(">>>Find min/max VHI test")
+    region = input("Region<<<")
+    max_date = week_index_to_year_week(dataframes, find_max_index(get_region_VHI(dataframes,region)))
+    min_date = week_index_to_year_week(dataframes, find_min_index(get_region_VHI(dataframes, region)))
+    print(">>>Max: "+str(max(get_region_VHI(dataframes,region)))+str(max_date))
+    print(">>>Min: "+str(min(remove_items(get_region_VHI(dataframes,region),-1))) + str(min_date))
+
     print(">>>Extreme drought area test")
     print(extreme_drought_area(dataframes, input("Region<<<"), int(input("Area_percentage<<<"))))
 
     print(">>>Moderate drought area test")
     print(moderate_drought_area(dataframes, input("Region<<<"), int(input("Area_percentage<<<"))))
-
+    print(">>>Loop iteration completed")
 
 
 begin()
