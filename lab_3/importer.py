@@ -97,9 +97,9 @@ def moderate_drought_area(dataframes, region_index, area_percentage):
 dataframes = {}
 
 
-def begin(data_update = False):
+def begin(force_data_update = False):
     global dataframes
-    if data_update or not os.path.exists("Downloaded_data"):
+    if force_data_update or not os.path.exists("Downloaded_data"):
         if not os.path.exists("Downloaded_data"):
             os.makedirs("Downloaded_data")
         clean_directory("Downloaded_data")
