@@ -11,60 +11,8 @@ def remove_items(test_list, item):
 
 
 def transform_regions_NOAA_to_ua(index):
-    if index == 1:
-        return 22
-    elif index == 2:
-        return 24
-    elif index == 3:
-        return 23
-    elif index == 4:
-        return 25
-    elif index == 5:
-        return 3
-    elif index == 6:
-        return 4
-    elif index == 7:
-        return 8
-    elif index == 8:
-        return 19
-    elif index == 9:
-        return 20
-    elif index == 10:
-        return 21
-    elif index == 11:
-        return 9
-    elif index == 12:
-        return 90
-    elif index == 13:
-        return 10
-    elif index == 14:
-        return 11
-    elif index == 15:
-        return 12
-    elif index == 16:
-        return 13
-    elif index == 17:
-        return 14
-    elif index == 18:
-        return 15
-    elif index == 19:
-        return 16
-    elif index == 20:
-        return 250
-    elif index == 21:
-        return 17
-    elif index == 22:
-        return 18
-    elif index == 23:
-        return 6
-    elif index == 24:
-        return 1
-    elif index == 25:
-        return 2
-    elif index == 26:
-        return 7
-    elif index == 27:
-        return 5
+    return [22,24,23,25,3,4,8,19,20,21,9,90,10,11,12,13,14,15,16,250,17,18,6,1,2,7,5][index]
+
 
 
 def download_txt_from_NOAA(log=False):
@@ -184,13 +132,3 @@ def main_loop():
     print(">>>Moderate drought area test")
     print(moderate_drought_area(dataframes, input("Region<<<"), int(input("Area_percentage<<<"))))
     print(">>>Loop iteration completed")
-
-
-begin()
-while True:
-    main_loop()
-
-#def years_VHI(dataframes, region_index, year_start, year_end):
-    #return dataframes[region_index][(year_start-1982)*52:(year_end-1982)*52]
-
-#print(years_VHI(dataframes, '4', 1990, 2000))
