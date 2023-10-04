@@ -33,11 +33,13 @@ class SimpleApp(server.App):
     inputs = [
         {
             "type": 'dropdown',
-            "label": 'Company',
+            "label": 'Plot value',
             "options": [
-                {"label": "Google", "value": "VHI"},
-                {"label": "Yahoo", "value": "TCI"},
-                {"label": "Apple", "value": "VCI"}],
+                {"label": "SMN", "value": "SMN"},
+                {"label": "SMT", "value": "SMT"},
+                {"label": "VCI", "value": "VCI"},
+                {"label": "TCI", "value": "TCI"},
+                {"label": "VHI", "value": "VHI"}],
             "key": 'ticker',
             "action_id": "update_data"}]
 
