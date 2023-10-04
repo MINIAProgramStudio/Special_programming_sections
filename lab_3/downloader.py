@@ -2,6 +2,7 @@ import requests
 import os
 import pandas as pd
 
+
 def to_txt(url,save_path):
     raw_data = requests.get(url)  # get data
     raw_data_file = open(save_path,"wb")
@@ -32,6 +33,7 @@ def to_txt(url,save_path):
     file_clean = open(save_path, 'w')  # open text file for data
     file_clean.write(text_clean)  # save data
     file_clean.close()  # close file
+
 
 def to_csv(url,save_path):
     to_txt(url, 'temporary_downloader_file_for_url_handling.txt')
