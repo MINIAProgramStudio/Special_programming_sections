@@ -98,37 +98,11 @@ def moderate_drought_area(dataframes, region_index, area_percentage):
 dataframes = {}
 
 
-def begin():
+def begin(forced_data_download = False):
     global dataframes
-    print(">>>Setup complete")
-    print(">>>Redownload data? (Y/N)")
-    if input("<<<").lower() in ['y', 'yes']:
+    if forced_data_download or not os.path.exists("Downloaded_data"):
         if not os.path.exists("Downloaded_data"):
             os.makedirs("Downloaded_data")
         clean_directory("Downloaded_data")
-        print(">>>Data deleted")
-        download_txt_from_NOAA(log=True)
-        print(">>>Data downloaded")
+        download_txt_from_NOAA()
     dataframes = import_txt_to_csv_from_dir("downloaded_data")
-    dataframes['1'].to_csv('1.csv', sep=';')
-
-    print(">>>Data imported")
-
-
-def main_loop():
-    print(">>>Year selection of VHI test")
-    print(get_year_VHI(dataframes, input("Region<<<"), int(input("Year<<<"))))
-
-    print(">>>Find min/max VHI test")
-    region = input("Region<<<")
-    max_date = week_index_to_year_week(dataframes, find_max_index(get_region_VHI(dataframes, region)))
-    min_date = week_index_to_year_week(dataframes, find_min_index(get_region_VHI(dataframes, region)))
-    print(">>>Max: " + str(max(get_region_VHI(dataframes, region))) + str(max_date))
-    print(">>>Min: " + str(min(remove_items(get_region_VHI(dataframes, region), -1))) + str(min_date))
-
-    print(">>>Extreme drought area test")
-    print(extreme_drought_area(dataframes, input("Region<<<"), int(input("Area_percentage<<<"))))
-
-    print(">>>Moderate drought area test")
-    print(moderate_drought_area(dataframes, input("Region<<<"), int(input("Area_percentage<<<"))))
-    print(">>>Loop iteration completed")
