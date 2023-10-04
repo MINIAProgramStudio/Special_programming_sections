@@ -3,3 +3,8 @@ venv
 __pycache__
 downloaded_data
 1.csv
+Include
+Lib
+Scripts
+share
+*.cfg
