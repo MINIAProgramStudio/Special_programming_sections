@@ -16,9 +16,8 @@ def transform_regions_NOAA_to_ua(index):
 
 
 def download_txt_from_NOAA(log=False):
-    url = "https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_TS_admin.php?provinceID=%s&country=UKR&yearlyTag=Weekly\
-    &type=Mean&TagCropland=land&year1=1982&year2=2023"
-    for i in range(1, 28):
+    url = "https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_TS_admin.php?provinceID=%s&country=UKR&yearlyTag=Weekly&type=Mean&TagCropland=land&year1=1982&year2=2023"
+    for i in range(0, 27):
         downloader.to_txt(url % (i), "downloaded_data/region%s__%s.txt" % (transform_regions_NOAA_to_ua(i),
                                                                            datetime.now().strftime(
                                                                                "%Y_%m_%d__%H_%M_%S")))
@@ -105,4 +104,4 @@ def begin(forced_data_download = False):
             os.makedirs("Downloaded_data")
         clean_directory("Downloaded_data")
         download_txt_from_NOAA()
-    dataframes = import_txt_to_csv_from_dir("downloaded_data")
+    dataframes = import_txt_to_csv_from_dir("Downloaded_data")
