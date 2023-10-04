@@ -2,6 +2,8 @@ annotated-types==0.5.0
 asttokens==2.4.0
 autocommand==2.2.2
 backcall==0.2.0
+certifi==2023.7.22
+charset-normalizer==3.3.0
 cheroot==10.0.0
 CherryPy==18.8.0
 colorama==0.4.6
@@ -14,6 +16,7 @@ decorator==5.1.1
 exceptiongroup==1.1.3
 executing==2.0.0
 fonttools==4.43.0
+idna==3.4
 inflect==7.0.0
 ipykernel==6.25.2
 ipython==8.16.1
@@ -50,6 +53,7 @@ python-dateutil==2.8.2
 pytz==2023.3.post1
 pywin32==306
 pyzmq==25.1.1
+requests==2.31.0
 six==1.16.0
 stack-data==0.6.3
 tempora==5.5.0
@@ -57,5 +61,6 @@ tornado==6.3.3
 traitlets==5.11.2
 typing_extensions==4.8.0
 tzdata==2023.3
+urllib3==2.0.6
 wcwidth==0.2.8
 zc.lockfile==3.0.post1
