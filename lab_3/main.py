@@ -35,12 +35,10 @@ class SimpleApp(server.App):
             "type": 'dropdown',
             "label": 'Plot value',
             "options": [
-                {"label": "SMN", "value": "SMN"},
-                {"label": "SMT", "value": "SMT"},
                 {"label": "VCI", "value": "VCI"},
                 {"label": "TCI", "value": "TCI"},
                 {"label": "VHI", "value": "VHI"}],
-            "key": 'ticker',
+            "key": 'plot_value',
             "action_id": "update_data"}]
 
     controls = [{"type": "hidden", "id": "update_data"}]
@@ -59,7 +57,7 @@ class SimpleApp(server.App):
 
     def getPlot(self, params):
         df = importer.dataframes['1']
-        plt_obj = df.plot(y = params['ticker'])
+        plt_obj = df.plot(y = params['plot_value'])
         fig = plt_obj.get_figure()
         return fig
 
