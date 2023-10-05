@@ -33,13 +33,23 @@ class SimpleApp(server.App):
     inputs = [
         {
             "type": 'dropdown',
-            "label": 'Plot value',
+            "label": 'Обрана колонка графіку',
             "options": [
                 {"label": "VCI", "value": "VCI"},
                 {"label": "TCI", "value": "TCI"},
                 {"label": "VHI", "value": "VHI"}],
             "key": 'plot_value',
-            "action_id": "update_data"}]
+            "action_id": "update_data"},
+        {
+            "type": 'dropdown',
+            "label": 'Область',
+            "options": [
+                {"label": "Вінницька", "value": "1"},
+                {"label": "Волинська", "value": "2"},
+                {"label": "Дніпропетровська", "value": "3"}],
+            "key": 'selected_region',
+            "action_id": "update_data"}
+    ]
 
     controls = [{"type": "hidden", "id": "update_data"}]
 
@@ -56,7 +66,7 @@ class SimpleApp(server.App):
         return importer.dataframes['1']
 
     def getPlot(self, params):
-        df = importer.dataframes['1']
+        df = importer.dataframes[params['selected_region']]
         plt_obj = df.plot(y = params['plot_value'])
         fig = plt_obj.get_figure()
         return fig
