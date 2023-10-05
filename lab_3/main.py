@@ -78,17 +78,23 @@ class SimpleApp(server.App):
 
     controls = [{"type": "hidden", "id": "update_data"}]
 
-    tabs = ["Plot"]
+    tabs = ["Plot", "Table"]
 
     outputs = [
         {
             "type": "plot","id" : "plot",
             "control_id" : "update_data",
-            "tab" : "Plot"}]
+            "tab" : "Plot"},
+        {"type": "table",
+         "id": "table_id",
+         "control_id": "update_data",
+         "tab": "Table",
+         "on_page_load": True}
+    ]
 
 
     def getData(self, params):
-        return importer.dataframes['selected_region']
+        return importer.dataframes[params['selected_region']]
 
 
     def getPlot(self, params):
