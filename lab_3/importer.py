@@ -39,61 +39,6 @@ def import_txt_to_csv_from_dir(path):
     return dataframes
 
 
-def get_region_VHI(dataframes, region_index):
-    return dataframes[region_index].VHI.tolist()
-
-
-def get_year_VHI(dataframes, region_index, year):
-    VHI_list = get_region_VHI(dataframes, region_index)
-    starting_year = int(dataframes[region_index].year.tolist()[0])
-    return VHI_list[(year - starting_year) * 52:(year - starting_year + 1) * 52]
-
-
-def week_index_to_year_week(dataframes, week_index):
-    starting_year = int(dataframes['1'].year.tolist()[0])
-    year = starting_year + int(week_index / 52)
-    week = week_index % 52
-    return [year, week]
-
-
-def find_max_index(in_list):
-    return in_list.index(max(in_list))
-
-
-def find_min_index(in_list):
-    return in_list.index(min(in_list))
-
-
-def extreme_drought_area(dataframes, region_index, area_percentage):
-    df = dataframes[region_index]
-    percents_list = df.SMN.tolist()
-    VHI_list = get_region_VHI(dataframes, region_index)
-    i = 0
-    output = []
-    while i < len(VHI_list):
-        if VHI_list[i] >= 0 and VHI_list[i] < 15 and percents_list[i] > area_percentage / 100:
-            year = week_index_to_year_week(dataframes, i)[0]
-            if not year in output:
-                output.append(year)
-        i += 1
-    return output
-
-
-def moderate_drought_area(dataframes, region_index, area_percentage):
-    df = dataframes[region_index]
-    percents_list = df.SMN.tolist()
-    VHI_list = get_region_VHI(dataframes, region_index)
-    i = 0
-    output = []
-    while i < len(VHI_list):
-        if VHI_list[i] >= 0 and VHI_list[i] < 35 and percents_list[i] > area_percentage / 100:
-            year = week_index_to_year_week(dataframes, i)[0]
-            if not year in output:
-                output.append(year)
-        i += 1
-    return output
-
-
 dataframes = {}
 
 
