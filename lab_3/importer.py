@@ -1,4 +1,5 @@
 import downloader
+import dataframes_dictionary_handler as ddh
 from datetime import datetime
 import os
 import pandas as pd
@@ -36,6 +37,7 @@ def import_txt_to_csv_from_dir(path):
     files = os.listdir(path)
     for file in files:
         dataframes[file[6:9].replace('_', '')] = pd.read_csv(path + "/" + file, skipinitialspace=True, sep=";")
+    dataframes = ddh.drom_minus_one_VHI_all(dataframes)
     return dataframes
 
 
