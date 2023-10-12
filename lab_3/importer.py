@@ -38,6 +38,9 @@ def import_txt_to_csv_from_dir(path):
     for file in files:
         dataframes[file[6:9].replace('_', '')] = pd.read_csv(path + "/" + file, skipinitialspace=True, sep=";")
     dataframes = ddh.drom_minus_one_VHI_all(dataframes)
+    for key in dataframes.keys():
+        for column in dataframes[key].keys():
+            dataframes[key][column][:] = [int(i) for i in dataframes[key][column]]
     return dataframes
 
 
