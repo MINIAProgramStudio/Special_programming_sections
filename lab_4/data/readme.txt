@@ -1,0 +1,1 @@
+Файл датасету "Individual household electric power consumption" слід завантажити у цю папку під назвою data_1.txt
