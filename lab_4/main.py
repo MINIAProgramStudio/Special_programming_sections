@@ -64,30 +64,47 @@ print("Pandas completed task 5 in " + str(pd_5_time) + " ms")
 array = dataframe.to_numpy()
 
 #task 1
+start = time.time_ns()
 mask = (array[:,2] > 5)
 np_selection_task_1 = array[mask,:]
+end = time.time_ns()
+np_1_time = (end - start)/(10**6)
+print("Numpy completed task 1 in " + str(np_1_time) + " ms")
 
 #task 2
+start = time.time_ns()
 mask = (array[:,4] > 235)
 np_selection_task_2 = array[mask,:]
+end = time.time_ns()
+np_2_time = (end - start)/(10**6)
+print("Numpy completed task 2 in " + str(np_2_time) + " ms")
 
 #task 3
+start = time.time_ns()
 mask = (array[:,5] <= 20)
 temp_array = array[mask]
 mask = (temp_array[:,5] >= 19)
 temp_array = temp_array[mask]
 mask = (temp_array[:, 7] > temp_array[:, 8])
 np_selection_task_3 = temp_array[mask]
+end = time.time_ns()
+np_3_time = (end - start)/(10**6)
+print("Numpy completed task 3 in " + str(np_3_time) + " ms")
 
 #task 4
+start = time.time_ns()
 temp_array = array
 np.random.shuffle(temp_array)
 temp_array = temp_array[0:500000]
 np_avg_1 = np.mean(temp_array[:,6])
 np_avg_2 = np.mean(temp_array[:,7])
 np_avg_3 = np.mean(temp_array[:,8])
+end = time.time_ns()
+np_4_time = (end - start)/(10**6)
+print("Numpy completed task 4 in " + str(np_4_time) + " ms")
 
 #task 5
+start = time.time_ns()
 mask = (array[:,1] >= "18:00:00")
 temp_array = array[mask]
 mask = (temp_array[:,2]+temp_array[:,3] >= 6)
@@ -99,3 +116,13 @@ array_head = temp_array[0:int(len(temp_array)/2)]
 array_head = array_head[0::3]
 array_tail = temp_array[int(len(temp_array)/2+0.5):]
 array_tail = array_tail[0::4]
+end = time.time_ns()
+np_5_time = (end - start)/(10**6)
+print("Numpy completed task 5 in " + str(np_5_time) + " ms")
+
+
+#Висновок:
+'''
+Оскільки реалізація завдань методами Pandas виконується у 2-30 разів швидше ніж Numpy, і Pandas пропонує більш зручні
+методи відбору, то в усіх ситуаціях доречно і ефективно використовувати методи Pandas 
+'''
