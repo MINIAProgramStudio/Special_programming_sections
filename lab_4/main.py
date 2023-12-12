@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
 import time
+import matplotlib.pyplot as plt
+
+#Частина 1ша
 
 #pandas dataframe
 dataframe = pd.read_csv("data/data_1.txt", sep = ";", low_memory = False)
@@ -126,3 +129,29 @@ print("Numpy completed task 5 in " + str(np_5_time) + " ms")
 Оскільки реалізація завдань методами Pandas виконується у 2-30 разів швидше ніж Numpy, і Pandas пропонує більш зручні
 методи відбору, то в усіх ситуаціях доречно і ефективно використовувати методи Pandas 
 '''
+
+#Частина 2га
+#Dataframe
+dataframe = pd.read_csv("data/bank-full.csv", sep=";")
+dataframe = dataframe.dropna()
+
+def standartize(dataframe, cloumn_index):
+    min_val = dataframe[cloumn_index].min()
+    max_val = dataframe[cloumn_index].max()
+    dataframe[cloumn_index] = (dataframe[cloumn_index]-min_val)/(max_val-min_val)
+    return dataframe
+dataframe=standartize(dataframe, 'balance')
+dataframe=standartize(dataframe, 'age')
+dataframe=standartize(dataframe, 'duration')
+dataframe['range'] = pd.cut(dataframe.balance, bins=[0, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1])
+tab = pd.crosstab(dataframe.range, dataframe.range).add_suffix('_Count')
+dataframe.range.value_counts().plot.bar()
+plt.show()
+
+dataframe['range'] = pd.cut(dataframe.balance, bins=[0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1])
+dataframe.range.value_counts().plot.bar()
+plt.show()
+
+
+plot = dataframe.sort_values('age').plot(y='balance', x='age')
+plt.show()
