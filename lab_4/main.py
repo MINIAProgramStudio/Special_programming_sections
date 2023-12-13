@@ -4,7 +4,7 @@ import time
 import matplotlib.pyplot as plt
 
 #Частина 1ша
-
+'''
 #pandas dataframe
 dataframe = pd.read_csv("data/data_1.txt", sep = ";", low_memory = False)
 dataframe = dataframe.dropna()
@@ -54,7 +54,7 @@ start = time.time_ns()
 time_cap = dataframe[dataframe["Time"]>="18:00:00"]
 power_cap = time_cap[time_cap['Global_active_power']+time_cap['Global_reactive_power']>6]
 selection = power_cap[power_cap["Sub_metering_2"] > power_cap['Sub_metering_1']]
-selection = power_cap[power_cap["Sub_metering_2"] > power_cap['Sub_metering_3']]
+selection = selection[selection["Sub_metering_2"] > selection['Sub_metering_3']]
 half_top = selection.head(int(selection.shape[0]/2))
 half_bottom = selection.tail(int(selection.shape[0]/2+0.5))
 half_top_every_3rd = half_top.iloc[::3,:]
@@ -123,7 +123,7 @@ end = time.time_ns()
 np_5_time = (end - start)/(10**6)
 print("Numpy completed task 5 in " + str(np_5_time) + " ms")
 
-
+'''
 #Висновок:
 '''
 Оскільки реалізація завдань методами Pandas виконується у 2-30 разів швидше ніж Numpy, і Pandas пропонує більш зручні
@@ -133,7 +133,9 @@ print("Numpy completed task 5 in " + str(np_5_time) + " ms")
 #Частина 2га
 #Dataframe
 dataframe = pd.read_csv("data/bank-full.csv", sep=";")
+print(dataframe.isna().all())
 dataframe = dataframe.dropna()
+
 
 def standartize(dataframe, cloumn_index):
     min_val = dataframe[cloumn_index].min()
@@ -143,6 +145,7 @@ def standartize(dataframe, cloumn_index):
 dataframe=standartize(dataframe, 'balance')
 dataframe=standartize(dataframe, 'age')
 dataframe=standartize(dataframe, 'duration')
+
 dataframe['range'] = pd.cut(dataframe.balance, bins=[0, 0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1])
 tab = pd.crosstab(dataframe.range, dataframe.range).add_suffix('_Count')
 dataframe.range.value_counts().plot.bar()
@@ -152,6 +155,5 @@ dataframe['range'] = pd.cut(dataframe.balance, bins=[0.2,0.3,0.4,0.5,0.6,0.7,0.8
 dataframe.range.value_counts().plot.bar()
 plt.show()
 
-
-plot = dataframe.sort_values('age').plot(y='balance', x='age')
+plot = dataframe.sort_values('age').plot.scatter(y='balance', x='age')
 plt.show()
