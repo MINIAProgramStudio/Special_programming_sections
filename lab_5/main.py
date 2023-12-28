@@ -6,7 +6,7 @@ from operator import add
 from scipy.signal import iirfilter, lfilter
 import math
 
-fig, ax = plt.subplots(figsize=(10,13),num="Programme d'onde sinusoïdale") #створення вікна розмірами 10х15
+fig, ax = plt.subplots(figsize=(10,13),num="Програма синусоїди") #створення вікна розмірами 10х15
 plt.subplots_adjust(left=0.25, bottom=0.25)
 
 x_axis = np.arange(0.0, np.pi*2, 0.001) #створення вісі абцис
