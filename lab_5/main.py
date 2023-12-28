@@ -27,7 +27,7 @@ def_opt = { #значення налаштувань за замовчуванн
     "show_noise": False,
     "noise_undefined": True,
     "filter_len": 1,
-    "filter_power": 0.1
+    "filter_power": 0.2
 }
 def custom_iirfilter(length, power):
     low = 0.0000000000000001  # Нижня границя частоти у нормалізованих одиницях (0-1)
@@ -49,7 +49,6 @@ def harmonic_with_noise(amplitude = 1, frequency = 1, phase = 0, noise_mean = 0,
         return base_line
 
 l, = plt.plot(x_axis, harmonic_with_noise(), lw=2, color='blue', label = "Фактична") #малювання найпершої синусоїди
-
 l2, = plt.plot(x_axis, harmonic_with_noise(), lw=2,color='red', label = 'Фільтрована')
 l3, = plt.plot(x_axis, harmonic_with_noise(), lw=2, color='green', label = "Оригінал")
 l2.set_visible(False)
