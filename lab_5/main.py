@@ -74,8 +74,8 @@ s_amp = Slider(ax_amp, 'Амплітуда', 0.001, np.pi, valinit=def_opt['ampl
 s_phase = Slider(ax_phase, 'Фаза', 0, 2*np.pi, valinit=def_opt['phase'])
 s_noise_mean = Slider(ax_noise_mean, 'Середнє значення шуму', -np.pi, np.pi, valinit=def_opt['noise_mean'])
 s_noise_disp = Slider(ax_noise_disp, 'Дисперсія шуму', 0, 2*np.pi, valinit=def_opt['noise_disp'])
-s_filter_n = Slider(ax_filter_n, 'Порядок фільтру', 1, 10, valinit=def_opt['noise_disp'])
-s_filter_fr = Slider(ax_filter_fr, 'Частота фільтру', 0.00000000000000011, 1, valinit=def_opt['noise_disp'])
+s_filter_n = Slider(ax_filter_n, 'Порядок фільтру', 1, 3, valinit=def_opt['noise_disp'])
+s_filter_fr = Slider(ax_filter_fr, 'Частота фільтру', 0.00000000000000011, 0.3, valinit=def_opt['noise_disp'])
 
 
 #створення кнопки та чекбоксу
@@ -124,6 +124,8 @@ def reset(event):
     s_phase.reset()
     s_noise_mean.reset()
     s_noise_disp.reset()
+    s_filter_n.reset()
+    s_filter_fr.reset()
 button.on_clicked(reset)
 
 
