@@ -27,14 +27,12 @@ def_opt = { #значення налаштувань за замовчуванн
     "show_noise": False,
     "noise_undefined": True,
     "filter_len": 1,
-    "filter_power": 0.001
+    "filter_power": 0.1
 }
 def custom_iirfilter(length, power):
-    nyquist = 0.5
-    low = float(power)  # Нижня границя частоти у нормалізованих одиницях (0-1)
-    high = 1-float(power) # Верхня границя частоти у нормалізованих одиницях (0-1)
-
-    b, a = iirfilter(N=length, Wn=[low, high], btype='band', ftype='butter')
+    low = 0.0000000000000001  # Нижня границя частоти у нормалізованих одиницях (0-1)
+    high = float(power) # Верхня границя частоти у нормалізованих одиницях (0-1)
+    b, a = iirfilter(N=int(length), Wn=[low, high], btype='band', ftype='butter')
     return b, a
 
 
@@ -77,8 +75,8 @@ s_amp = Slider(ax_amp, 'Амплітуда', 0.001, np.pi, valinit=def_opt['ampl
 s_phase = Slider(ax_phase, 'Фаза', 0, 2*np.pi, valinit=def_opt['phase'])
 s_noise_mean = Slider(ax_noise_mean, 'Середнє значення шуму', -np.pi, np.pi, valinit=def_opt['noise_mean'])
 s_noise_disp = Slider(ax_noise_disp, 'Дисперсія шуму', 0, 2*np.pi, valinit=def_opt['noise_disp'])
-s_filter_n = Slider(ax_filter_n, 'Порядок фільтру', 1, 20, valinit=def_opt['noise_disp'])
-s_filter_fr = Slider(ax_filter_fr, 'Частота фільтру', 0, 0.49, valinit=def_opt['noise_disp'])
+s_filter_n = Slider(ax_filter_n, 'Порядок фільтру', 1, 10, valinit=def_opt['noise_disp'])
+s_filter_fr = Slider(ax_filter_fr, 'Частота фільтру', 0.00000000000000011, 1, valinit=def_opt['noise_disp'])
 
 
 #створення кнопки та чекбоксу
@@ -90,8 +88,8 @@ radio = CheckButtons(rax, (['Показувати шум']))
 
 def update_sin(val): #оновлення синусоїди, якщо було змінено параметри чистої синусоїди
     l.set_ydata(harmonic_with_noise(s_amp.val, s_freq.val, s_phase.val, s_noise_mean.val, s_noise_disp.val,def_opt['show_noise']))
-    b, a = custom_iirfilter(def_opt['filter_len'], def_opt['filter_power'])
-    l2_y = lfilter(b, a, harmonic_with_noise())
+    b, a = custom_iirfilter(s_filter_n.val, s_filter_fr.val)
+    l2_y = lfilter(b, a, harmonic_with_noise(s_amp.val, s_freq.val, s_phase.val, s_noise_mean.val, s_noise_disp.val,def_opt['show_noise']))
     l2.set_ydata(l2_y)
     l3.set_ydata(harmonic_with_noise(s_amp.val, s_freq.val, s_phase.val, s_noise_mean.val, s_noise_disp.val))
     fig.canvas.draw_idle()
@@ -102,8 +100,8 @@ s_phase.on_changed(update_sin)
 def update_noise(val): #оновлення синусоїди, якщо було змінено параметри шуму
     l.set_ydata(harmonic_with_noise(s_amp.val, s_freq.val, s_phase.val, s_noise_mean.val, s_noise_disp.val,
                                     def_opt['show_noise'], True))
-    b, a = custom_iirfilter(def_opt['filter_len'], def_opt['filter_power'])
-    l2_y = lfilter(b, a, harmonic_with_noise())
+    b, a = custom_iirfilter(s_filter_n.val, s_filter_fr.val)
+    l2_y = lfilter(b, a, harmonic_with_noise(s_amp.val, s_freq.val, s_phase.val, s_noise_mean.val, s_noise_disp.val,def_opt['show_noise']))
     l2.set_ydata(l2_y)
     l3.set_ydata(harmonic_with_noise(s_amp.val, s_freq.val, s_phase.val, s_noise_mean.val, s_noise_disp.val))
     fig.canvas.draw_idle()
@@ -111,8 +109,8 @@ s_noise_mean.on_changed(update_noise)
 s_noise_disp.on_changed(update_noise)
 
 def update_filter(val):
-    b, a = custom_iirfilter(def_opt['filter_len'], def_opt['filter_power'])
-    l2_y = lfilter(b, a, harmonic_with_noise())
+    b, a = custom_iirfilter(s_filter_n.val, s_filter_fr.val)
+    l2_y = lfilter(b, a, harmonic_with_noise(s_amp.val, s_freq.val, s_phase.val, s_noise_mean.val, s_noise_disp.val,def_opt['show_noise']))
     l2.set_ydata(l2_y)
     l3.set_ydata(harmonic_with_noise(s_amp.val, s_freq.val, s_phase.val, s_noise_mean.val, s_noise_disp.val))
     fig.canvas.draw_idle()
