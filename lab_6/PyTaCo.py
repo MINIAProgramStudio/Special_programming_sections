@@ -53,4 +53,22 @@ class PyTableConsole:
             out_text+="|\n"
             i+=1
         return out_text
-    
+
+    def transpose(self):
+        old_self = self.contains
+        new_self = []
+        for i in range(self.height()):
+            new_self.append([])
+            for ii in range(self.width()):
+                new_self[-1].append(old_self[ii][i])
+        self.contains = new_self
+        self.update()
+
+    def sort_by_column(self, column_index, skip_n_rows=0):
+        self.transpose()
+        for i in range(skip_n_rows,self.width()):
+            for ii in range(skip_n_rows,self.width()-1):
+                if self.contains[ii][column_index] < self.contains[ii+1][column_index]:
+                    self.contains[ii], self.contains[ii+1] = self.contains[ii+1], self.contains[ii]
+        self.transpose()
+        self.update()
