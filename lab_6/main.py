@@ -7,7 +7,7 @@ import PyTaCo
 #Генерація випадкових даних
 k = 2
 b = 1
-num_points = 100
+num_points = 1000
 noise = np.random.randn(num_points)
 x = np.linspace(0, 10, num_points)
 y = k * x + b + noise
@@ -73,8 +73,8 @@ def regression_plot(x,y,n_iter = 1000, learning_rate = 0.01,b_0 = 0,k_0=1):
         y_i = b_regr + x*k_regr
         deviation = (y_i/(y+0.0000001)).mean()
         plot[i] = deviation
-        '''if deviation>0.99999 and deviation<1.00001:
-            break'''
+        if deviation>0.99999 and deviation<1.00001:
+            break
         dldb = y.sum() - y_i.sum()
         dldk = 0
         for ii in range(len(x)):
@@ -85,7 +85,7 @@ def regression_plot(x,y,n_iter = 1000, learning_rate = 0.01,b_0 = 0,k_0=1):
         k_regr = k_regr - learning_rate * dldk
     return plot
 
-
+'''
 #визначення оптимальних параметрів
 def closest_position(list_in, target):
     if target == 0:
@@ -104,9 +104,9 @@ def closest_position(list_in, target):
 
 learning_rate_best = 0
 iterations_best = 0
-progress_bar = tqdm(total = 4000)
+progress_bar = tqdm(total = 2750)
 plot_array_closest = []
-for learning_rate in range(-15,1):
+for learning_rate in range(-10,1):
     if learning_rate <= 0:
         learning_rate = 2**(learning_rate)
     plot_array = []
@@ -114,29 +114,30 @@ for learning_rate in range(-15,1):
         for bb in range(1,6):
             for noise_num in range(10):
                 yy = x*bb+kk + np.random.randn(num_points)
-                plot_array.append([closest_position(regression_plot(x,yy,5**iterations,learning_rate),1) for iterations in range(3,5)])
+                plot_array.append([closest_position(regression_plot(x,yy,5**iterations,learning_rate),1) for iterations in range(3,6)])
                 progress_bar.update(1)
     plot_array_closest.append(plot_array)
 
 pos = [0,0]
-plot_array_raw_results = [["Learning_rate"],["Кількість ітерацій"],["Найвища точність"]]
+plot_array_raw_results = [["Learning_rate"],["Кількість ітерацій"],["Середня точність"]]
 for learning_rate in range(11):
-    highest_accuracy = 100000000000
+    accuracy = 0
     length = len(plot_array_closest[learning_rate])
-    for iterations in range(1,5):
+    for iterations in range(5,6):
+        ac_length = 0
         for value in plot_array_closest[learning_rate][iterations]:
-            if abs(1-value[0]) < abs(1-highest_accuracy):
-                highest_accuracy = value[0]
+            if value[0] < 1:
+                accuracy += value[0]
+            else:
+                accuracy += 1/value[0]
+            ac_length+=1
         plot_array_raw_results[0].append(2**(learning_rate-5))
-        if highest_accuracy < 1:
-            plot_array_raw_results[2].append(highest_accuracy*100)
-        else:
-            plot_array_raw_results[2].append(100/highest_accuracy)
+        plot_array_raw_results[2].append(100*accuracy/ac_length)
         plot_array_raw_results[1].append(5**iterations)
 results = PyTaCo.PyTableConsole(plot_array_raw_results)
 results.sort_by_column(2,1)
 print(results)
-
+'''
 #отримані оптимальні вхідні параметри: 0.03125 625
 #ці параметри можуть відрізнятись через випадковість шуму під час перевірок
 #графік з регресією
@@ -153,10 +154,8 @@ plt.show()
 
 
 #графік точності від кількості ітерацій
-plt.plot(regression_plot(x,y,625,0.00625), color='red')
+plt.plot(regression_plot(x,y,1000,0.00625), color='red')
 plt.xlabel('ітерація')
 plt.ylabel('точність')
 plt.legend()
 plt.show()
-
-#
