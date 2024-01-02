@@ -169,7 +169,7 @@ plt.show()
 
 
 #графік точності від кількості ітерацій
-plt.plot(regression_plot(x,y,125, 0.0078125), color='red')
+plt.plot(regression_plot(x,y,200, 0.0078125), color='red')
 plt.xlabel('ітерація')
 plt.ylabel('точність')
 plt.legend()
