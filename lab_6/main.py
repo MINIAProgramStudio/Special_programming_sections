@@ -55,7 +55,7 @@ def regression(x,y,n_iter = 1000, learning_rate = 0.01,b_0 = 0,k_0=1):
     for i in range(n_iter):
         y_i = b_regr + x*k_regr
         deviation = (y_i/y).mean()
-        if deviation>0.999 and deviation<1.001:
+        if deviation>0.99 and deviation<1.01:
             break
         dldb = 0
         dldk = 0
@@ -99,7 +99,7 @@ def regression_plot(x,y,n_iter = 1000, learning_rate = 0.01,b_0 = 0,k_0=1):
 
 
 #визначення оптимальних параметрів
-
+'''
 def closest_position(list_in, target):
     if target == 0:
         raise Exception("Error in closest_position(list_in, target): Target must not be 0")
@@ -151,15 +151,15 @@ for learning_rate in range(11):
 results = PyTaCo.PyTableConsole(plot_array_raw_results)
 results.sort_by_column(2,1)
 print(results)
-
-#отримані оптимальні вхідні параметри: 0.00625 625
+'''
+#отримані оптимальні вхідні параметри: 0.0078125 125
 #ці параметри можуть відрізнятись через випадковість шуму під час перевірок
 
 #графік з регресією
 plt.scatter(x, y, label='Дані з шумом')
 plt.plot(x, k * x + b, color='red', label='Задана пряма')
 plt.plot(x, k_predicted * x + b_predicted, color='blue', label='Знайдена пряма')
-regr = regression(x,y,625,0.00625)
+regr = regression(x,y,125,0.0078125)
 plt.plot(x, regr[0]*x+regr[1], color='green', label='Знайдена пряма, регресія')
 plt.xlabel('x')
 plt.ylabel('y')
@@ -169,7 +169,7 @@ plt.show()
 
 
 #графік точності від кількості ітерацій
-plt.plot(regression_plot(x,y,1000, 0.00625), color='red')
+plt.plot(regression_plot(x,y,125, 0.0078125), color='red')
 plt.xlabel('ітерація')
 plt.ylabel('точність')
 plt.legend()
